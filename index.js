@@ -60,8 +60,13 @@ async function run() {
             console.log(data);
             const result = await destinationsCollections.updateOne(
                 { _id: new ObjectId(id) },
-                { $set: data  }
+                { $set: data }
             )
+            res.send(result)
+        })
+        app.delete('/destinations/:id', async (req, res) => {
+            const { id } = req.params
+            const result = await destinationsCollections.deleteOne({ _id: new ObjectId(id) })
             res.send(result)
         })
 
