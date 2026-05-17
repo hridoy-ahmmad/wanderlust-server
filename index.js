@@ -54,6 +54,16 @@ async function run() {
             res.send(result)
 
         })
+        app.patch('/destinations/:id', async (req, res) => {
+            const { id } = req.params
+            const data = req.body
+            console.log(data);
+            const result = await destinationsCollections.updateOne(
+                { _id: new ObjectId(id) },
+                { $set: data  }
+            )
+            res.send(result)
+        })
 
 
         // Send a ping to confirm a successful connection
