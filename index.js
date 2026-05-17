@@ -35,6 +35,7 @@ async function run() {
 
         const database = client.db('wanderlust')
         const destinationsCollections = database.collection('destinations')
+        const bookingCollections = database.collection('bookings')
 
         app.post('/destinations', async (req, res) => {
             const destinationsData = req.body
@@ -67,6 +68,20 @@ async function run() {
         app.delete('/destinations/:id', async (req, res) => {
             const { id } = req.params
             const result = await destinationsCollections.deleteOne({ _id: new ObjectId(id) })
+            res.send(result)
+        })
+
+        // Bookings//
+
+        app.post('/bookings', async (req, res) => {
+            const bookingData = req.body
+            // console.log(bookingData);
+            const result = await bookingCollections.insertOne(bookingData)
+            console.log('result pawa giche', result);
+            res.send(result)
+        })
+        app.get('/bookings', async (req, res) => {
+            const result = await bookingCollections.find().toArray()
             res.send(result)
         })
 
